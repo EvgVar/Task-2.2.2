@@ -12,11 +12,15 @@ import java.util.List;
 
 @Controller
 public class CarsController {
+    private final CarDAO carDAO;
+
     @Autowired
-    private CarDAO carDAO;
+    public CarsController(CarDAO carDAO) {
+        this.carDAO = carDAO;
+    }
 
     @GetMapping(value = "/cars")
-    public String printCars(@RequestParam(value = "count",defaultValue = "5") int count, ModelMap modelMap) {
+    public String printCars(@RequestParam(value = "count", defaultValue = "5") int count, ModelMap modelMap) {
         List<Car> cars = carDAO.getCars(count);
         modelMap.addAttribute("cars", cars);
         return "cars";
